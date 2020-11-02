@@ -59,7 +59,7 @@ The following are exercises from the book of \citet{snell}.
 		-1 & \w \text{ is even.}\\
 		\end{cases}
 	\end{equation}
-We also have $\P(\w) = 1/9$ for any card in the deck, and have exactly four odd numbers and five even numbers on said deck. Therefore, 
+We also have $\P(\w) = 1/9$ for any card in the deck, and have exactly four odd numbers and five even numbers on said deck. Therefore, the expected value of his winnings is
 \begin{equation}
 	\E(X) = \sum_{\w \in \Om} X(w) \P( \w) =(-1)(1/9) +  (1/9) + \dots + (1/9) = 4(1/9) - 5(1/9) = -1/9.
 \end{equation}
@@ -91,13 +91,13 @@ We also have $\P(\w) = 1/9$ for any card in the deck, and have exactly four odd 
   \begin{equation}
   	\E(X) \E(Y) = \E(X) \cdot 0 = 0 = \E(Z) = \E(XY).
   \end{equation}
-  The random variables are not independent. To see this, consider $\P(X = 2, Y = 0)$. There is only one pair of $(\w_1, \w_2) \in \Om$ such that $\w_1 + \w_2 = 2$ and $\w_1 - \w_2 = 0$, namely $(1,1)$, so $\P(X = 2, Y = 0) = 1/36$. In fact, $\P(X = 2) = 1/36$ too. However, $\P(Y = 0) = 6/36$, for every pair $(\w_1, \w_2)$ with $\w_1 = \w_2$ satisfies, so 
+  \textbf{The random variables are not independent}. To see this, consider $\P(X = 2, Y = 0)$. There is only one pair of $(\w_1, \w_2) \in \Om$ such that $\w_1 + \w_2 = 2$ and $\w_1 - \w_2 = 0$, namely $(1,1)$, so $\P(X = 2, Y = 0) = 1/36$. In fact, $\P(X = 2) = 1/36$ too. However, $\P(Y = 0) = 6/36$, for every pair $(\w_1, \w_2)$ with $\w_1 = \w_2$ satisfies, so 
   \begin{equation}
   	\P(X = 2) \P(Y = 0) = (1/36)(6/36) \neq \P(X = 2, Y = 0) = 1/36.
   \end{equation}
 \end{proof}
 
-\begin{ex}[Ex. 18, p. 249]
+\begin{ex}[Ex. 18, p. 249]\label{ex:keys}
 Exactly one of six similar keys opens a certain door. If you try the keys, one after another, what is the expected number of keys that you will have to try before success?
 \end{ex}
 \begin{proof}[Solution]
@@ -105,9 +105,10 @@ Lets denote by 0 choosing a wrong key, and by 1 choosing the correct key. Then
 \begin{equation}
 \Om = \lbrace 1, 01, 001, 0001, 00001, 000001 \rbrace,
 \end{equation}
-and $X(\w) = \textit{number of zeros in } \w$. Assuming the keys are chosen uniformly at random, the probability of trying $k$ keys before success would be
+and $X(\w) = \textit{number of zeros in } \w$. Assuming the keys are chosen uniformly at random, and that once a key is tried we discard it (i.e., \textit{no replacement}), the probabilities of trying $k$ keys before success are as seen in Table \ref{tab:ex3}.
 
-\begin{center} 
+\begin{table}
+\centering
 \begin{tabular}{|c|c|}
 	\hline
 	$k$ & $\P(X = k)$ \\
@@ -125,10 +126,12 @@ and $X(\w) = \textit{number of zeros in } \w$. Assuming the keys are chosen unif
 	$5$ & $\frac{5}{6} \cdot \frac{4}{5} \cdot \frac{3}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} \cdot 1 = \frac{1}{6}$ \\
 	\hline
 \end{tabular}
-\
-\end{center}
+\caption{Probabilities for Exercise \ref{ex:keys}}
+\label{tab:ex3}
+\end{table}
 
-Thus 
+
+Thus, the expected number of keys to try before success is
 \begin{align}
 	\E(X) &= \sum_{k = 0}^{5} (1/6) k\\
 	&= \frac{1}{6} \sum_{k = 0}^{5} k\\
@@ -152,7 +155,7 @@ To explain Equation \ref{expected_points_subsets}, see that the probability of a
  &= \frac{3 |\w|}{4} - \frac{|\w|^2}{4} + \frac{|\w|}{4} - |\w| + \frac{|\w|^2}{4}\\
  &= 0.
 \end{align}
-Therefore, the expected points the student will receive is given by 
+Therefore, the expected score for the student is 
 \begin{equation}
 	\E(X) = \sum_{\w \in \Om} \frac{1}{16} (0) = 0.
 \end{equation}
@@ -169,7 +172,7 @@ A large number, $N$, of people are subjected to a blood test. This can be admini
 \begin{proof}[Solution]
 Since each of the $k$ persons have a probability $p$ of being positive, the probability that at least one of them is positive (and hence, the pool) is $p + p + \dots + p = kp$.
 
-Under plan (2), we have an expected value of
+Under plan (2), we have an expected number of tests of
 \begin{align}
 	\E(X) &= \sum_{i = 1}^{N/k} kp(k+1) + (1-kp) \\
 	&= (N/k) \lbrack kp (k+1) + (1-kp)\rbrack\\
@@ -286,7 +289,7 @@ First, the indefinite integral is solved. This is rewritten as
 	\begin{equation}
 		\E(T) = \lim_{t \longrightarrow \infty} F(t) - F(0) = \frac{2}{\lambda}.
 	\end{equation}
-	To find the variance, first $\E(T^2)$ will be obtained. This is equal to 
+	Therefore, the\textbf{ expected lifetime of this light bulb} is $2/0.05 = 40$ hours. To find the variance, first $\E(T^2)$ will be obtained. This is equal to 
 	\begin{equation}
 		\int_{0}^{\infty} t^2(\lambda t e^{-\lambda t}) \, dt = \int_{0}^{\infty} \lambda^2 t^3 e^{-\lambda t} \, dt.
 	\end{equation}
@@ -314,7 +317,7 @@ First, the indefinite integral is solved. This is rewritten as
 	\begin{equation}
 		\E(T^2) = \lim_{t \longrightarrow \infty} (-\lambda t^3 e^{-\lambda t} + \frac{3}{\lambda} F(t) + \frac{3}{\lambda} \frac{2}{\lambda}) = \frac{6}{\lambda^2}.
 	\end{equation} 
-	Now, by Theorem 6.15 \citep{snell}, $\V(T) = \E(T^2) - \E(T)^2$, so we get $\V(T) = \frac{6}{\lambda^2} - (\frac{2}{\lambda})^2$. In this particular example, $\lambda = 0.05$, which gives $\V(T) = 2400-1600=800$.
+	Now, by Theorem 6.15 \citep{snell}, $\V(T) = \E(T^2) - \E(T)^2$, so we get $\V(T) = \frac{6}{\lambda^2} - (\frac{2}{\lambda})^2$. In this particular example, $\lambda = 0.05$, which gives a variance $\V(T) = 2400-1600=800$.
 \end{proof}
 
 \begin{ex}[Ex. 26, p. 284] \label{ex:river}
@@ -325,11 +328,11 @@ Suppose you are standing on the bank of a straight river.
 \end{enumerate}
 \end{ex}
 \begin{proof}[Solution]
-	In part 1, the possible directions to stay on dry land are given by $\theta, 0 \leq \theta \leq \pi$. By basic trigonometry, the distance between the river and the point $P$ resulting from walking 1 km in a $\theta$-degree direction is $\sin \theta$. Since this $\theta$ is chosen uniformly at random, the expected distance is 
+	In part 1, the possible directions to stay on dry land are given by $\theta, 0 \leq \theta \leq \pi$. By basic trigonometry, the distance between the river and the point $P$ resulting from walking 1 km in a $\theta$-radian direction is $\sin \theta$. Since this $\theta$ is chosen uniformly at random, the expected distance is 
 	\begin{equation}
 		\int_{0}^{\pi} \frac{1}{\pi} \sin( \theta) \, d\theta = \frac{2}{\pi}.
 	\end{equation}
-	In part 2, we need to know in which directions is the river less than 1 km away. These are the directions inside the triangle in Figure \ref{fig:river}, which forms a $\pi - 2\theta$ radians angle. The probability of choosing any of these directions is $\frac{\pi-2\theta}{2\pi} = \frac{1}{2} - \frac{\theta}{\pi}$
+	In part 2, we need to know in which directions is the river less than 1 km away. These are the directions inside the triangle in Figure \ref{fig:river}, which forms a $\pi - 2\theta$ radians angle. The probability of choosing any of these directions is $\frac{\pi-2\theta}{2\pi} = \frac{1}{2} - \frac{\theta}{\pi}$.
 \end{proof}
 
 \begin{figure}
