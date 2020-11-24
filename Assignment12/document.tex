@@ -1,0 +1,375 @@
+\documentclass[letterpaper, 10 pt, conference]{article} 
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amscd,amsthm} % variety of useful math macros
+\usepackage[inner=1.5 cm, outer = 1.5 cm, top=1 cm, bottom = 1.5 cm]{geometry}
+\usepackage{subcaption}
+%For inserting graphics
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{array, multirow}
+\usepackage{lipsum}
+\usepackage{natbib}
+
+\bibliographystyle{abbrvnat}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{ex}{Exercise}
+
+\newcommand\E{\ensuremath{\mathbb{E}}}
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\renewcommand{\P}{\ensuremath{\mathbb{P}}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+
+\newcommand\var[1]{\, \mathrm{Var} \left( #1 \right)}
+
+\newcommand\pr[1]{\, \mathbb{P} \left( #1 \right)}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \left( #1 \right)}
+
+\newcommand\expec[1]{\, \mathbb{E} \left\lbrack #1 \right\rbrack}
+
+\title{Exercises
+}
+\date{November 24, 2020}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue,
+	citecolor=MidnightBlue
+}
+
+\author{G. Palafox}
+
+\begin{document}
+\maketitle
+The following are exercises from the book of \citet{snell}.
+
+\begin{ex}[Ex. 1, p. 392]\label{ex:1p392}
+	Let $Z_1, Z_2, \dots, Z_N$ describe a branching process in which each parent has $j$ offspring with probability $p_j$. Find the probability $d$ that the process eventually dies out if
+	\begin{enumerate}
+		\item $p_0 = 1/2, p_1 = 1/4, p_2 = 1/4$.
+		\item $p_0 = 1/3, p_1 = 1/3, p_2 = 1/3$.
+		\item $p_0 = 1/3, p_1 = 0, p_2 = 2/3$.
+		\item $p_j = 1/2^{j+1}$, for $j = 0, 1, 2, \dots$.
+		\item $p_j = (1/3)(2/3)^{j}$, for $j = 0, 1, 2, \dots$.
+		\item $p_j = e^{-2} 2^{j} / j!$, for $j = 0, 1, 2, \dots$ (estimate $d$ numerically).
+		\end{enumerate}
+\end{ex}
+\begin{proof}[Solution to \ref{ex:1p392}.1]
+	We have $m = \sum k p_k = 0(1/2) + 1 (1/4) + 2 (1/4) = 3/4 \leq 1$ so $d = 1$.
+\end{proof}
+\begin{proof}[Solution to \ref{ex:1p392}.2]
+	Here, $m = \sum k p_k = 0 (1/3) + 1 (1/3) + 2(1/3) = 1 \leq 1$ so $d = 1$.
+\end{proof}
+\begin{proof}[Solution to \ref{ex:1p392}.3]
+	Since $m = \sum k p_k = 0 (1/3) + 0 (0) + 2(2/3) = 4/3 > 1$, to find $d$ we need to compute the roots of $h(x) = x$, where $h(x) = \sum p_k x^k$. In this case, $h(x) = (1/3) + (2/3)x^2$, and 
+	\begin{align}
+		(1/3) + (2/3) x^2 = x &\Leftrightarrow 1 + 2 x^2 = 3x \\
+		&\Leftrightarrow 2 x^2 - 3x + 1 = 0 \\
+		&\Leftrightarrow (2x-1)(x-1) = 0\\
+		&\Leftrightarrow x = 1/2, x = 1,
+	\end{align}
+	so $d=1/2$.
+\end{proof}
+\begin{proof}[Solution to \ref{ex:1p392}.4]
+	Knowing $\sum_{k = 1}^{\infty} k x^k = \frac{x}{(1-x)^2}$ and $\sum_{k = 1}^{\infty} x^k = \frac{x}{1-x}$ when $|x| < 1$, we see that
+	\begin{align}
+		m = \sum_{j = 0}^{\infty} j \left(\frac{1}{2^{j+1}}\right) &= \sum_{j=1}^{\infty} (j-1) \left(\frac{1}{2^{j}}\right)\\
+		&= \sum_{j=1}^\infty \frac{j}{2^j} - \sum_{j=1}^\infty \frac{1}{2^j} \\
+		&= 2 - 1 = 1.
+	\end{align}
+	Given how it is equal to one, we conclude $d = 1$.
+\end{proof}
+\begin{proof}[Solution to \ref{ex:1p392}.5]
+Proceeding as before, we see that 
+\begin{align}
+	m &= \sum_{j=0}^\infty j (1/3) (2/3)^j \\
+	&= (1/3) \frac{2/3}{(1-(2/3))^2} \\
+	&= (1/3) \frac{(2/3)}{ (1/3)^2} = \frac{(2/3)}{(1/3)} = 2.
+\end{align}
+Again, having $m = 2 > 1$, we must find $x$ such that 
+\begin{equation}
+	\sum_{j=0}^{\infty}  (1/3)(2/3)^{j} x^j = x.
+\end{equation}
+Rearranging the terms, we must find $x$ such that
+\begin{equation}
+(1/3)	\sum_{j = 0}^\infty (\frac{2}{3} x)^j = x.
+\end{equation}
+Given that $|x| < 1$, then $|\frac{2}{3} x| < 1$ and 
+\begin{equation}
+		\sum_{j = 0}^\infty (\frac{2}{3} x)^j = \frac{1}{1 - (\frac{2}{3} x)},
+\end{equation}
+so we need $x$ such that 
+\begin{equation}
+	(1/3) \frac{1}{1 - (\frac{2}{3} x)} = (1/3) \left( \frac{3}{3-2x}  \right) = \frac{1}{3-2x} =x.
+\end{equation}
+This $x$ is found by solving the equation $2 x^2 - 3x+ 1 = 0$,  which we did in the solution to \ref{ex:1p392}.3. Therefore $d = 1/2$.
+\end{proof}
+\begin{proof}[Solution to \ref{ex:1p392}.6]
+	Starting by finding $m$ one gets
+	\begin{align}
+		m  &= \sum_{j = 0}^{\infty} \frac{e^{-2} 2^j}{j!} j \\
+		&= e^{-2} \sum_{j = 0}^\infty \frac{2^j}{j!} j \\
+		&= e^{-2} \sum_{j = 1}^\infty 2 \frac{2^{j-1}}{(j-1)!}\\
+		&= 2 e^{-2} \sum_{j = 1}^\infty  \frac{2^{j-1}}{(j-1)!}  \\
+		&= 2 e^{-2} \sum_{j = 0}^\infty \frac{2^j}{j!} \\
+		&= 2 e^{-2} e^{2} = 2.
+	\end{align}
+	Since $m > 1$, to obtain $d$ we must find $x$ such that 
+	\begin{align}
+		\sum_{j = 0}^\infty  \frac{e^{-2} 2^j}{j!} x^j = x.
+	\end{align}
+Given that
+\begin{align}
+	\sum_{j = 0}^\infty  \frac{e^{-2} 2^j}{j!} x^j = e^{-2} \sum_{j = 0}^\infty  \frac{ 2^j}{j!} x^j = e^{-2}e^{2x} = e^{2x-2},
+\end{align}
+we numerically estimate with Wolfram Alpha \citep{Wolfram|Alpha} that $e^{2x-2} = x$ for $x = 1$ and $x \approx 0.203$, so $d \approx 0.203$.
+\end{proof}
+
+\begin{ex}[Ex. 3, p. 392]\label{ex:chain-letter}
+	In the chain letter problem (see Example 10.14) find your expected profit if
+	\begin{enumerate}
+		\item $p_0 = 1/2, p_1 = 0$, and $p_2 = 1/2$.
+		\item $p_0 = 1/6, p_1 = 1/2$, and $p_2 = 1/3$.
+	\end{enumerate}
+\end{ex}
+\begin{proof}[Solution to \ref{ex:chain-letter}.1]
+	We see in \citet{snell} that the expected profit is $50m + 50 m^{12} - 100$, where $m = p_1 + 2p_2$. Here, $m = 0 + 2(1/2) = 1$, so the expected profit is $50(1) + 50(1)^{12} - 100 = 100 - 100 = 0$.
+\end{proof}
+\begin{proof}[Solution to \ref{ex:chain-letter}.2]
+	Here, $m = (1/2) + 2(1/3) = 7/6$, so the expected profit is $50(7/6) + 50(7/6)^{12} - 100 \approx 276.26$. If $p_0 > 1/2$, then $p_1 + p_2 < 1/2$, so $2 p_1 + 2 p_2 < 1$ and $p_1 + 2p_2 < 1 - p_1 \leq 1$. Therefore, $50 (p_1 + 2 p_2) < 50$ and $50(p_1 + 2p_2)^{12} < 50$, so $50 (p_1 + 2 p_2) + 50 (p_1 + 2 p_2)^{12} < 100$, so the expected profit is negative.
+\end{proof}
+
+\begin{ex}[Ex. 3, p. 401]
+	Let $X$ be a continuous random variable with values in $[0,2]$ and density $f_X$. Find the moment generating function $g(t)$ for $X$ if 
+	\begin{enumerate}
+	\item $f_X (x) = 1/2$.
+	\item $f_X (x) = (1/2) x$.
+	\item $ f_X(x) = 1 - (1/2) x $.
+	\item $ f_X (x) = |1-x| $.
+	\item $ f_X (x) = (3/8) x^2 $.
+	\end{enumerate}
+\end{ex}
+\begin{proof}[Solution]
+	We calculate these with the equation $g(t) = \int_{-\infty}^{\infty} e^{tx} f_X (x) \, dx$. In this particular case, since the random variable has values in $[0,2]$, the moment generating function will be $g(t) = \int_{0}^{2} e^{tx} f_X (x) \, dx$. For each of the densities $f_X$ from number $1.$ to $5.$, the corresponding generating function will be denoted by $g_k (t), k = 1, 2, \dots, 5$. First,
+	\begin{align}
+		g_1 (t) &= \int_{0}^{2} e^{tx} (1/2) \, dx \\
+		&= (1/2) \int_{0}^{2} e^{tx} \, dx \\
+		&= (1/2) \lbrack (1/t) e^{tx} \Big\lvert^{2}_{0} \rbrack \\
+		&= (1/2) \lbrack (1/t) e^{2t} - (1/t) e^0 \rbrack \\
+		&= (1/2) \lbrack \frac{e^{2t} - 1}{t} \rbrack \\
+		&= \frac{1}{2t} (e^{2t} - 1)
+	\end{align}
+	is obtained. Then we compute
+	\begin{align}
+		g_2 (t) &= \int_{0}^{2} e^{tx} (1/2) x \, dx \\
+		&= (1/2) \lbrack \frac{1}{t} x e^{tx} \Big\lvert^{2}_{0} - \int_{0}^{2} \frac{1}{t} e^{tx} \, dx \rbrack \\
+		&= (1/2) \lbrack \frac{1}{t} x e^{tx} \Big\lvert^{2}_{0} - \frac{1}{t^2} e^{tx} \Big\lvert^{2}_{0} \rbrack \\
+		&= (1/2) \lbrack ( \frac{1}{t} 2 e^{2t} - \frac{1}{t^2} e^{2t} ) - ( 0 - \frac{1}{t^2} ) \rbrack \\
+		&= (1/2) \lbrack \frac{2}{t} e^{2t} - \frac{1}{t^2} e^{2t} + \frac{1}{t^2} \rbrack \\
+		&= \frac{1}{t} e^{2t} - \frac{1}{2t^2} e^{2t} + \frac{1}{2t^2} .\\ 
+	\end{align}
+For the third, one gets
+	\begin{align}
+		g_3 (t) &= \int_{0}^{2} e^{tx} (1 - (1/2) x) \, dx \\
+		&= \int_{0}^{2} e^{tx} \, dx - \int_{0}^{2} (1/2) x e^{tx} \, dx \\
+		&= \frac{1}{t} e^{tx} \Big\lvert^{2}_{0} - (\frac{1}{t} e^{2t} - \frac{1}{2t^2} e^{2t} + \frac{1}{2t^2}) \\
+		&= \frac{1}{t} e^{2t} - \frac{1}{t} - \frac{1}{t} e^{2t} + \frac{1}{2t^2} e^{2t} - \frac{1}{2t^2} \\
+		&= \frac{1}{2t^2} e^{2t} - \frac{1}{2t^2} - \frac{1}{t}. \\ 
+	\end{align}
+Afterwards, we proceed to compute
+	\begin{equation}
+		g_4 (t) = \int_{0}^{2} |1-x| e^{tx} \, dx = \int_{0}^{1} (1-x) e^{tx} \, dx + \int_{1}^{2} (x-1) e^{tx} \, dx.
+	\end{equation}
+    Computing the integrals one gets 
+    \begin{align}
+    	\int_{0}^{1} (1-x) e^{tx} \, dx &= \int_{0}^{1} e^{tx} \, dx - \int_{0}^{1} x e^{tx} \, dx \\
+    	&= \frac{1}{t} e^{tx} \Big\lvert^{1}_{0} - \lbrack \frac{1}{t} x e^{tx} - \frac{1}{t^2} e^{tx} \rbrack \Big\lvert^{1}_{0} \\
+    	&= (\frac{1}{t} e^{t} - \frac{1}{t}) - (\frac{1}{t} e^{t} - \frac{1}{t^2} e^t + \frac{1}{t^2})\\
+    	&= \frac{1}{t^2} e^t - \frac{1}{t^2} - \frac{1}{t}, 
+    \end{align}
+    and
+    \begin{align}
+    	\int_{1}^{2} (x-1) e^{tx} \, dx &= \int_{1}^{2} x e^{tx} \, dx - \int_{1}{2} e^{tx} \, dx \\
+    	&= (\frac{1}{t} x e^{tx} - \frac{1}{t^2} e^{tx})\Big\lvert^{2}_{1} - \frac{1}{t} e^{tx} \Big\lvert^{2}_{1}\\
+    	&= \frac{2}{t} e^{2t} - \frac{1}{t^2} e^{2t} - \frac{1}{t} e^{t} + \frac{1}{t^2} e^{t} - \frac{1}{t} e^{2t} + \frac{1}{t} e^t \\
+    	&= \frac{1}{t} e^{2t} - \frac{1}{t^2} e^{2t} + \frac{1}{t^2} e^t. \\
+    \end{align}
+    Therefore 
+    \begin{align}
+    	g(t) &= (\frac{1}{t^2} e^t - \frac{1}{t^2} - \frac{1}{t} ) + ( \frac{1}{t} e^{2t} - \frac{1}{t^2} e^{2t} + \frac{1}{t^2} e^t) \\
+    	&= (\frac{1}{t} - \frac{1}{t^2}) e^{2t} + \frac{2}{t^2} e^t - \frac{1}{t^2} - \frac{1}{t} .
+    \end{align}
+    Finally, we compute $g_5 (t)$ as 
+    \begin{align}
+    	g_5 (t) &= \int_{0}^{2} (3/8) x^2 e^{tx} \, dx \\
+    	&= (3/8) \int_{0}^{2} x^2 e^{tx} \, dx \\
+    	&= (3/8) \left( (\frac{x^2}{t} e^{tx}) \Big\lvert^{2}_{0} - \int_{0}^{2} 2x (\frac{1}{t} e^{tx} ) \, dx \right) \\
+    	&= (3/8) \left( \frac{4}{t} e^{2t} - \frac{2}{t} (\frac{2}{t} e^{2t} - \frac{1}{t^2} e^{2t} + \frac{1}{t^2}) \right) \\
+    	&= (3/8) \left( \frac{4}{t} e^{2t} - \frac{4}{t^2} e^{2t} + \frac{2}{t^3} e^{2t} - \frac{2}{t^3} \right)\\
+    	&= \frac{3}{2t} e^{2t} - \frac{3}{2t^2} e^{2t} + \frac{3}{4t^3} e^{2t} - \frac{3}{4t^3}.
+    \end{align}
+\end{proof}
+
+\begin{ex}[Ex. 6, p. 402] \label{ex:pdf_from_charfn}
+	Let $X$ be a continuous random variable whose characteristic function $k_X (\tau)$ is 
+	\[ k_X (\tau) = e^{-|\tau|}, \quad - \infty < \tau < \tau. \]
+	Show directly that the density $f_X$ of $X$ is 
+	\[f_X (x) = \frac{1}{\pi (1+x^2).}	\]
+\end{ex}
+\begin{proof}
+	We know that
+	\begin{equation} \label{eq:pdf_from_charfn2}
+		f_X (x) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} e^{-i \tau x} k_X (\tau) \, d\tau,
+	\end{equation}
+	where we have 
+	\begin{equation}
+		k_X (\tau) = e^{-|\tau|} = \begin{cases}
+		e^{\tau} & \tau \leq 0; \\
+		e^{-\tau} & \tau > 0.
+		\end{cases}
+	\end{equation}
+	Additionally, we know that $e^{i \theta} = \cos \theta + i \sin \theta$. Thus, substituting this in Equation \ref{eq:pdf_from_charfn2} we get
+	\begin{align}
+		f_X (x) &= \frac{1}{2 \pi}  \int_{-\infty}^{\infty} (\cos (-\tau x) + i \sin(-\tau x) ) k_X (\tau) \, d\tau \\
+		&= \frac{1}{2 \pi} \left\lbrack  \int_{-\infty}^{\infty} \cos (-\tau x)  k_X (\tau) \, d\tau + i  \int_{-\infty}^{\infty} \sin(-\tau x)  k_X (\tau) \, d\tau \right\rbrack \\
+		&= \frac{1}{2 \pi} \left\lbrack \left\lbrace  \int_{-\infty}^{0} \cos (-\tau x) e^\tau \, d\tau +  \int_{0}^{\infty} \cos (- \tau x) e^{-\tau} \, d\tau \right\rbrace + i \left\lbrace  \int_{-\infty}^{0} \sin(-\tau x) e^{\tau} \, d\tau +  \int_{0}^{\infty} \sin(-\tau x) e^{-\tau} d\tau \right\rbrace \right\rbrack
+ 	\end{align} 
+ Using the fact that the cosine function is even, changing variables and rearranging the integration limits, we see that 
+ \begin{equation}
+ 	\int_{-\infty}^{0} \cos (-\tau x) e^\tau \, d\tau = \int_{0}^{\infty} \cos (\tau x) e^{-\tau} \, d\tau
+ \end{equation}
+ and
+ \begin{equation}
+ 	\int_{0}^{\infty} \cos (-\tau x) e^{-\tau} \, d\tau = 	\int_{0}^{\infty} \cos (\tau x) e^{-\tau} \, d\tau.
+ \end{equation}
+ Similarly, seeing how sine is odd, we get
+ \begin{equation}
+ 	\int_{-\infty}^{0} \sin(-\tau x) e^{\tau} \, d\tau = \int_{0}^{\infty} \sin(\tau x) e^{-\tau} \, d\tau
+ \end{equation}
+ and
+  \begin{equation}
+ \int_{0}^{\infty} \sin(-\tau x) e^{-\tau} \, d\tau =  -\int_{0}^{\infty} \sin(\tau x) e^{-\tau} \, d\tau. 
+ \end{equation}
+ Therefore,
+ \begin{align}
+ 	f_X (x) &= \frac{1}{2 \pi} \left\lbrack \left\lbrace   \int_{0}^{\infty} \cos (\tau x) e^{-\tau} \, d\tau +  \int_{0}^{\infty} \cos (\tau x) e^{-\tau} \, d\tau \right\rbrace + i \left\lbrace  \int_{0}^{\infty} \sin(\tau x) e^{-\tau} \, d\tau -  \int_{0}^{\infty} \sin(\tau x) e^{-\tau} \, d\tau \right\rbrace \right\rbrack\\
+ 	&= \frac{1}{2 \pi} 2  \int_{0}^{\infty} \cos (\tau x) e^{-\tau} \, d\tau,
+ \end{align}
+ where integrating by parts twice we get
+ \begin{align}
+ 	 \int_{0}^{\infty} \cos (\tau x) e^{-\tau} \, d\tau &= -e^{-\tau} \cos (\tau x)\Big{\lvert}^{\infty}_{0} - \int_{0}^{\infty} x \sin (\tau x) e^{-\tau} \, d\tau \\
+ 	 &= -e^{-\tau} \cos (\tau x)\Big{\lvert}^{\infty}_{0} + x \sin (\tau x) e^{-\tau}\Big{\lvert}^{\infty}_{0} - \int_{0}^{\infty} x^2 \cos(\tau x) e^{-\tau} \, dt\\
+ 	 &= \frac{x \sin(-\tau x) - \cos (\tau x)}{1 + x^2} e^{-\tau} \Big{\lvert}^{\infty}_{0} \\
+ 	 &= 0 - \frac{x \sin 0 - \cos 0}{1 + x^2}\\
+ 	 &= \frac{1}{1+x^2},
+ \end{align}
+ therefore
+ \begin{equation}
+ 	f_X (x) = \frac{1}{\pi (x^2 + 1)}.
+ \end{equation}
+\end{proof}
+
+\begin{ex}[Ex. 10, p. 403] \label{ex:ind_trials}
+	Let $X_1, \dots, X_n$ be an independent trials process with density 
+	\begin{equation*}
+		f(x) = \frac{1}{2} e^{-|x|}, \quad -\infty < x < \infty.
+	\end{equation*}
+	\begin{enumerate}
+		\item Find the mean and variance of $f(x)$.
+		\item Find the moment generating function for $X_1, S_n, A_n, S_{n}^{\ast}$.
+		\item What can you say about the moment generating function of $S_{n}^{\ast}$ as $n \rightarrow \infty$.
+		\item What can you say about the moment generating function of $A_n$ as $n \rightarrow \infty$.
+	\end{enumerate}
+\end{ex}
+\begin{proof}[Solution to \ref{ex:ind_trials}.1]
+	We know from \citet{snell} that
+	\begin{equation}
+		k_X (\tau) = g_X (i \tau) = \int_{-\infty}^{\infty} e^{i \tau x} f_X (x) dx =\frac{1}{2} \int_{-\infty}^{\infty} e^{i \tau x} e^{-|x|} \, dx.
+	\end{equation}
+	Making a $u = -x$ substitution in the integral from Exercise \ref{ex:pdf_from_charfn} one sees that 
+	\begin{equation}
+		\int_{-\infty}^{\infty} e^{i \tau x} e^{-|x|} \, dx = \int_{-\infty}^{\infty} e^{-i \tau x} e^{-|x|} \, dx = \frac{2}{1 + \tau^2},
+	\end{equation}
+	so $k_X (\tau) = \frac{1}{1 + \tau^2}$, and from the relation $k_X (\tau) =  g_X (i \tau)$, one sees $g_X (t) = \frac{1}{1 - t^2}$. Knowing this, the mean is obtained as
+	\begin{equation}
+		\frac{d g_X (t)}{dt} \Big{\lvert}_{t=0} = \frac{2t}{(1-t^2)^2} \Big{\lvert}_{t = 0} = 0,
+	\end{equation}
+	and the variance as 
+	\begin{equation}
+	\frac{d^2 g_X (t)}{dt^2} \Big{\lvert}_{t=0} = \left\lbrack \frac{2}{(1-t^2)^2} + \frac{8t^2}{(1-t^2)^3}\right\rbrack \Big{\lvert}_{t = 0} = 2.
+	\end{equation}
+\end{proof}
+\begin{proof}[Solution to \ref{ex:ind_trials}.2]
+	The moment generating function for $X_1$, and the rest of the $X_i$, is as obtained in the solution to \ref{ex:ind_trials}.1, and is $g_X (t) = \frac{1}{1 - t^2}$. Then, 
+	\begin{align}
+		g_{S_n} (t) = \expec{e^{S_n t}} &= \expec{e^{(X_1 + \dots + X_n) t}}\\
+		&= \expec{e^{X_1 t} e^{X_2 t} \cdots e^{X_n t}} \\
+		&= \expec{e^{X_1 t}} \cdots \expec{e^{X_n t}} \quad \text{(because of independence)} \\
+		&= g_{X_1} (t) \cdots g_{X_n} (t) \\
+		&= \left(\frac{1}{1-t^2}\right)^{n}.
+	\end{align}
+	For $A_n = S_n / n$, see that 
+	\begin{equation}
+		g_{A_n} (t) = g_{ \frac{S_n}{n} } = \expec{ e^{\frac{S_n}{n} t}} =  \expec{ e^{S_n \frac{t}{n}}} = g_{S_n} (t/n),
+	\end{equation}
+	so 
+	\begin{equation}
+		g_{A_n} (t) = \left( \frac{1}{1-(\frac{t}{n})^2} \right)^n.
+	\end{equation}
+	For $S_{n}^{\ast} = \frac{S_n - n\mu}{\sqrt{n \sigma^2}}  = \frac{S_n}{\sqrt{2 n}}$ (substituting the mean and variance found), proceeding as was done with $A_n$, we obtain 
+	\begin{equation}
+		g_{S_{n}^{\ast}} (t) = g_{\frac{S_n}{\sqrt{2n}}} (t)=  g_{S_n} (t / \sqrt{2n}) =  \left( \frac{1}{1-(\frac{t}{\sqrt{2n}})^2} \right)^n.
+	\end{equation}
+\end{proof}
+\begin{proof}[Solution to \ref{ex:ind_trials}.3]
+Here, and in the solution of Exercise \ref{ex:ind_trials}.4, the following result found in \citet{Casella_Berger_2002}, will be used: \textit{If a sequence $(a_n)$ converges to $a$, then $(1 + \frac{a_n}{n})^n$ converges to $e^a$.} To find the limit of $g_{S_{n}^{\ast}}$ as $n \longrightarrow \infty$, see that
+\begin{equation}
+	\lim_{n \rightarrow \infty} \left( \frac{1}{1-(\frac{t}{\sqrt{2n}})^2} \right)^n = \frac{\lim_{n \rightarrow \infty} 1^n}{\lim_{n \rightarrow \infty} (1-(\frac{t}{\sqrt{2n}})^2)^n}
+\end{equation}
+if both limits exist. Given how 
+\begin{equation}
+	1-\left(\frac{t}{\sqrt{2n}}\right)^2 = 1 + \left(\frac{-t^2}{2n}\right) = 1 + \left(\frac{\frac{-t^2}{2}}{n}\right),
+\end{equation}
+and the sequence $a_n = -t^2 / 2$ converges to $-t^2 / 2$ as $n$ goes to infinity, the aforementioned theorem tells us 
+\begin{equation}
+	\lim_{n \rightarrow \infty} \left(1-(\frac{t}{\sqrt{2n}})^2\right)^n = \lim_{n \rightarrow \infty} \left(1 + \left(\frac{\frac{-t^2}{2}}{n}\right)\right)^n = e^{\frac{-t^2}{2}},
+\end{equation}
+so 
+\begin{equation}
+	\lim_{n \rightarrow \infty} g_{S_{n}^{\ast}} = \lim_{n \rightarrow \infty} \left( \frac{1}{1-(\frac{t}{\sqrt{2n}})^2} \right)^n = \frac{\lim_{n \rightarrow \infty} 1^n}{\lim_{n \rightarrow \infty} (1-(\frac{t}{\sqrt{2n}})^2)^n} = \frac{1}{e^{\frac{-t^2}{2}}} = e^{\frac{t^2}{2}}.
+\end{equation}
+\end{proof}
+\begin{proof}[Solution to \ref{ex:ind_trials}.4]
+	As before, we see that
+	\begin{equation}
+		\lim_{n \rightarrow \infty}  \left( \frac{1}{1-(\frac{t}{n})^2} \right)^n = \frac{\lim_{n \rightarrow \infty} 1^n}{\lim_{n \rightarrow \infty} \left( 1-(\frac{t}{n})^2 \right)^n}
+	\end{equation}
+	if both limits exist, and
+\begin{equation}
+	1-(\frac{t}{n})^2 = 1 + \left( \frac{-t^2}{n^2}\right) = 1 + \frac{\frac{-t^2}{n}}{n}.
+\end{equation}
+The sequence $a_n = -t^2 / n$ converges to zero, so 
+\begin{equation}
+	\lim_{n \rightarrow \infty} \left( 1-\left(\frac{t}{n}\right)^2 \right)^n = \lim_{n \rightarrow \infty} \left( 1 + \frac{\frac{-t^2}{n}}{n}\right)^n = e^0 = 1,
+\end{equation}
+which gives 
+\begin{equation}
+	\lim_{n \rightarrow \infty} g_{A_n} = \lim_{n \rightarrow \infty}  \left( \frac{1}{1-(\frac{t}{n})^2} \right)^n = \frac{\lim_{n \rightarrow \infty} 1^n}{\lim_{n \rightarrow \infty} \left( 1-(\frac{t}{n})^2 \right)^n} = 1.
+\end{equation}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliography{ref}
+
+\end{document}
