@@ -72,27 +72,27 @@
 \begin{defn}\label{defn:converge_as}
 	A sequence of random variables $X_1, X_2, \dots$, converges almost surely to a random variable $X$ if, for every $\varepsilon > 0$, 
 	\begin{equation}
-		\pr{\lim_{n \rightarrow \infty} < \varepsilon} = 1
+		\pr{\lim_{n \rightarrow \infty} |X_n -X| < \varepsilon} = 1
 	\end{equation}
 \end{defn}
 
 \begin{thm}[Weak law of large numbers]\label{thm:weak_lln}
-	Let $X_1, X_2, dots$ be independent, identically distributed random variables with $\expec{X_i} = \mu$ and $\var{X_i} = \sigma^2 < \infty$. Then, $\bar{X_n} = (1/n) \sum_{i = 1}^{\infty} X_u$ converges in probability to $\mu$.
+	Let $X_1, X_2, \dots$ be independent, identically distributed random variables with $\expec{X_i} = \mu$ and $\var{X_i} = \sigma^2 < \infty$. Then, $\bar{X_n} = (1/n) \sum_{i = 1}^{n} X_i$ converges in probability to $\mu$.
 \end{thm}
 
 \begin{thm}[Strong law of large numbers]\label{thm:strong_lln}
-	Let $X_1, X_2, dots$ be independent, identically distributed random variables with $\expec{X_i} = \mu$ and $\var{X_i} = \sigma^2 < \infty$. Then, $\bar{X_n} = (1/n) \sum_{i = 1}^{\infty} X_u$ converges almost surely to $\mu$.
+	Let $X_1, X_2, \dots$ be independent, identically distributed random variables with $\expec{X_i} = \mu$ and $\var{X_i} = \sigma^2 < \infty$. Then, $\bar{X_n} = (1/n) \sum_{i = 1}^{n} X_i$ converges almost surely to $\mu$.
 \end{thm}
 
 \section{Renewal processes}
 One of the many applications of the law of large numbers is in a kind of stochastic process called renewal processes. The contents of this section can be found in the book of \citet{lawler_2006}.
 
 \begin{defn}
-	Let $T_1, T_2, \dots$ be independent, identically distributed, nonnegative random variables with distribution $F(x)$. The renewal proces associated with $\lbrace T_i \rbrace$ is the process that count the number of events that have ocurred by time $t$. More precisely, the renewal process $N_t$ is defined by 
+	Let $T_1, T_2, \dots$ be independent, identically distributed, non-negative random variables with distribution $F(x)$. The renewal process associated with $\lbrace T_i \rbrace$ is the process that counts the number of events that have occurred by time $t$. More precisely, the renewal process $N_t$ is defined by 
 	\begin{equation}
 		N_t = \begin{cases}
 		0 & t < T_1; \\
-		\max\lbrace n : T_1 + \dots T_n \leq t\rbrace &  \text{ else.}
+		\max\lbrace n : T_1 + \dots + T_n \leq t\rbrace &  \text{ else.}
 		\end{cases}
 	\end{equation}
 \end{defn}
@@ -103,7 +103,7 @@ The random variables $T_i$ are thought of as being the lifetimes of a component,
 \end{exm}
 
 \begin{exm}\label{exm:queue}
-Consider a queue with a single server where customers arrive according to a Poisson process with rate $\lambda$. Assume the service times for customers are independent, identically distributed random variables with mean $\mu$. Let $Y_t$ denote the number of people in the queue t time $t$.  Let 
+Consider a queue with a single server where customers arrive according to a Poisson process with rate $\lambda$. Assume the service times for customers are independent, identically distributed random variables with mean $\mu$. Let $Y_t$ denote the number of people in the queue at time $t$.  Let 
 \begin{align}
 R_1 = \inf \lbrace t > 0 : Y_t = 1\rbrace, \\
 S_1 = \inf\lbrace t > 0 : Y_{R_1 + t} = 0\rbrace, \\
@@ -115,7 +115,7 @@ R_i = \inf \lbrace t > 0 : Y_{T_1 + \dots + T_{i-1} +t} = 1\rbrace, \\
 S_i = \inf\lbrace t > 0 : Y_{T_1 + \dots + T_{i-1} + R_i + t} = 0\rbrace, \\
 T_i = R_i + S_i.
 \end{align}
-The time represented by the $R_i$ can be thought of as idle ties, and the time represented by $S_i$ as the busy times. The random variables $T_1. T_2, \dots$ give rise to a renewal process $N_t$. 
+The time represented by $R_i$ can be thought of as idle times, and the time represented by $S_i$ as the busy times. The random variables $T_1, T_2, \dots$ give rise to a renewal process $N_t$. 
 \end{exm}
 
 Using the Strong Law of Large Numbers (Theorem \ref{thm:strong_lln}), the following analogue of the law of large numbers for renewal processes can be derived:
@@ -127,7 +127,7 @@ Using the Strong Law of Large Numbers (Theorem \ref{thm:strong_lln}), the follow
 	\end{equation}
 \end{prop}
 
-A Poisson process (see Example \ref{exm:poisson}) was simulated\footnote{The code, as well as this report, can be found in \url{https://github.com/palafox794/AppliedProbabilityModels/tree/master/Assignment13}.} with R version 4.0.0 in a Jupyter notebook \citep{R, jupyter}. In Figure \ref{fig:lln} it is observed how $N(t)/t \rightarrow 1/\mu$ as $t$ grows.
+A Poisson process (see Example \ref{exm:poisson}) was simulated\footnote{The code, as well as this report, can be found in \url{https://github.com/palafox794/AppliedProbabilityModels/tree/master/Assignment13}.} with R version 4.0.0 in a Jupyter notebook \citep{R, jupyter}. In Figure \ref{fig:lln} it is observed how $N_t /t \rightarrow 1/\mu$ as $t$ grows.
 
 \begin{figure}
 	\centering
@@ -138,7 +138,7 @@ A Poisson process (see Example \ref{exm:poisson}) was simulated\footnote{The cod
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Epidemics on networks}
-In the work of \citet{janson2014law}, a law of large numbers is established for a epidemic process on a random graph. In particular, a random graph with a given degree sequence is considered. Given the graph, the epidemic evolves as a continuous-time Markov chain \citep{Liggett_2010} where each infectious vertex recovers at rate $\rho \geq 0$ and also infects each susceptible neighbor at a rate $\beta > 0$. The graph has $n$ vertices, of which initially $n_S, n_I, n_R$ are susceptible, infectious and recovered respectively. It is assumed the fractions of initially susceptible, infectious and recovered vertices converge to some $\alpha_S, \alpha_R, \alpha_I \in [0,1]$, with $\alpha_S > 0$. Additionally, it is assumed the degree of a randomly chosen susceptible vertex converges to a probability distribution $(p_k)_{0}^{\infty}$, that is, 
+In the work of \citet{janson2014law}, a law of large numbers is established for an epidemic process on a random graph. In particular, a random graph with a given degree sequence is considered. Given the graph, the epidemic evolves as a continuous-time Markov chain \citep{Liggett_2010} where each infectious vertex recovers at rate $\rho \geq 0$ and also infects each susceptible neighbor at a rate $\beta > 0$. The graph has $n$ vertices, of which initially $n_S, n_I, n_R$ are susceptible, infectious and recovered respectively. It is assumed the fractions of initially susceptible, infectious and recovered vertices converge to some $\alpha_S, \alpha_R, \alpha_I \in [0,1]$, with $\alpha_S > 0$. Additionally, it is assumed the degree of a randomly chosen susceptible vertex converges to a probability distribution $(p_k)_{k=0}^{\infty}$, that is, 
 \begin{equation}
 	n_{S,k} / n \rightarrow p_k,
 \end{equation}
@@ -146,14 +146,14 @@ where $n_{S,k}$ is the number of susceptible vertices of degree $k$. Furthermore
 \begin{equation}
 	R_0 := \left( \frac{\beta}{\beta + \rho}\right) \left( \frac{\alpha_S}{\mu} \right) \sum_{k = 0}^{\infty} (k-1) k p_k,
 \end{equation}
-interpreted as the basic reproduction number of the epidemic, is greater than one, for every $\varepsilon > 0$,
+interpreted as the basic reproduction number of the epidemic, is greater than one, then for every $\varepsilon > 0$,
 \begin{equation}
 	\pr{T_0 = \infty \text{ and } S_0 - S_\infty > \varepsilon n} \rightarrow 0.
 \end{equation}
 This represents a small outbreak. However, it is also proved that if $T_0 < \infty$, the outbreak is large.
 
 \subsection{Vaccination}
-In their work, \citet{janson2014law} also study the effects of vaccinations. A perfect vaccine is assumed, so a vaccinated vertex never becomes infected and in practice behaves as recovered. It is assumed each initially susceptible vertex of degree $k$ is vaccinated with probability $\pi_k \in [0,1)$, independently of the others. As an example, consider the \textit{uniform vaccination} strategy. Here, every susceptible vertex is vaccinated with the same probability $v \in [0, 1)$, independently of all the others. Using the law of large numbers, it is proven that $V/n_S$ converges in probability to $v$, where $V$ is the total number $V$ of vaccinations. 
+In their work, \citet{janson2014law} also study the effects of different vaccination strategies. A perfect vaccine is assumed, so a vaccinated vertex never becomes infected and in practice behaves as recovered. It is assumed each initially susceptible vertex of degree $k$ is vaccinated with probability $\pi_k \in [0,1)$, independently of the others. As an example, consider the \textit{uniform vaccination} strategy. Here, every susceptible vertex is vaccinated with the same probability $v \in [0, 1)$, independently of all the others. Using the law of large numbers, it is proven that $V/n_S$ converges in probability to $v$, where $V$ is the total number $V$ of vaccinations. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliography{ref}
